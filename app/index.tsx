@@ -1,20 +1,19 @@
 import { useRouter } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
-
-export default function Index() {
-  const router = useRouter();
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-      <TouchableOpacity onPress = {()=>router.push('/home')}>
-        <Text>Change the route</Text>
-      </TouchableOpacity>
-    </View>
-  );
+import { Image, ScrollView, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import logo from "../assets/images/logo.png";
+export default function Index () {
+  const router = useRouter()
+  return(
+    <SafeAreaView>
+      <ScrollView contentContainerStyle = {{height:"100%"}}>
+        <View>
+          <Image
+            source ={logo}
+            style ={{width:300 , height: 300}}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  )
 }
