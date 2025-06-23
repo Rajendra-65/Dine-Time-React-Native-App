@@ -16,7 +16,7 @@ export default function Index () {
             style ={{width:300 , height: 300}}
           /> */}
           <Text
-            className = "h-20 w-20 bg-red-300"
+            className = "h-20 w-20 bg-red-800"
           >
             Hello
           </Text>
