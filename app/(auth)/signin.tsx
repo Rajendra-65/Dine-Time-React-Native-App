@@ -2,13 +2,13 @@ import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import React from "react";
 import {
-  Image,
-  ScrollView,
-  StatusBar,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Image,
+    ScrollView,
+    StatusBar,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
@@ -18,7 +18,7 @@ import logo from "../../assets/images/logo.png";
 const SignUp = () => {
   const router = useRouter();
 
-  const SignInSchema = Yup.object().shape({
+  const SignUpSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email")
       .required("Email is required"),
@@ -27,7 +27,7 @@ const SignUp = () => {
       .required("Password is required"),
   });
 
-  const handleSignUp = (values) => {
+  const handleSignIn = (values) => {
     console.log("Form values:", values);
     // 👉 You can call your API here
   };
@@ -46,8 +46,8 @@ const SignUp = () => {
         <View className="w-5/6 self-center">
           <Formik
             initialValues={{ email: "", password: "" }}
-            validationSchema={SignInSchema}
-            onSubmit={handleSignUp}
+            validationSchema={SignUpSchema}
+            onSubmit={handleSignIn}
           >
             {({
               handleChange,
@@ -94,7 +94,7 @@ const SignUp = () => {
                   className="bg-[#f49933]  p-3 rounded items-center mt-2"
                   onPress={handleSubmit}
                 >
-                  <Text className="text-white font-semibold">Sign Up</Text>
+                  <Text className="text-white font-semibold">Sign In</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -108,13 +108,15 @@ const SignUp = () => {
             resizeMode="contain"
           />
 
+          
+
           <TouchableOpacity
             className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-row items-center justify-center"
-            onPress={() => router.push('/signin')}
+            onPress={() => router.push('/signup')}
           >
-            <Text className="text-white">Already a user ?</Text>
+            <Text className="text-white">Don&apos;t Have an account ?</Text>
             <Text className="text-lg font-semibold underline text-[#f49933] ml-2">
-              SignIn
+              Signup
             </Text>
           </TouchableOpacity>
         </View>
@@ -125,4 +127,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
