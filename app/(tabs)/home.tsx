@@ -1,19 +1,20 @@
-import uploadData from "@/config/BulkUpload"
-import { restaurants } from "@/store/resturants"
+import { db } from "@/config/firebaseConfig"
+import { restaurantTypes } from "@/types/restaurants"
 import { BlurView } from "expo-blur"
-import React, { useEffect } from 'react'
+import { collection, getDocs, query } from "firebase/firestore"
+import { useEffect, useState } from "react"
 import { ActivityIndicator, FlatList, Image, ImageBackground, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import homeBanner from '../../assets/images/homeBanner.png'
 import logo from '../../assets/images/logo.png'
 
-
 export default function Home() {
 
   useEffect(() => {
-    uploadData();
+    getRestaurants()
   }, []);
 
+  const [restaurants, setrestaurants] = useState<restaurantTypes[]>([])
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -47,6 +48,18 @@ export default function Home() {
       </View>
     </TouchableOpacity>
   );
+
+  const getRestaurants = async () => {
+    const q = query(collection(db, 'restaurants'));
+    const res = await getDocs(q)
+    const restaurantList = [];
+    res.forEach((item) => {
+      restaurantList.push(item.data());
+    });
+    setrestaurants(restaurantList);
+    console.log("fetched...")
+  }
+
 
   return (
     <SafeAreaView style={{ backgroundColor: '#2b2b2b', flex: 1, paddingBottom: 20 }}>
