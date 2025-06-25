@@ -1,6 +1,7 @@
 import { db } from "@/config/firebaseConfig"
 import { restaurantTypes } from "@/types/restaurants"
 import { BlurView } from "expo-blur"
+import { useRouter } from "expo-router"
 import { collection, getDocs, query } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { ActivityIndicator, FlatList, Image, ImageBackground, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
@@ -15,7 +16,7 @@ export default function Home() {
   }, []);
 
   const [restaurants, setrestaurants] = useState<restaurantTypes[]>([])
-
+  const router = useRouter()
   const renderItem = ({ item }) => (
     <TouchableOpacity
       className="bg-[#f5f5f5] w-64 mr-4 rounded-xl shadow-lg overflow-hidden"
@@ -26,6 +27,13 @@ export default function Home() {
         shadowOpacity: 0.2,
         shadowRadius: 4,
       }}
+      onPress={() =>
+        router.push({
+          pathname: "/restaurants/[restaurant]",
+          params: { restaurant: item.name }
+        })
+      }
+
     >
       <Image
         resizeMode="cover"
@@ -98,7 +106,7 @@ export default function Home() {
         </ImageBackground>
 
         {/* Special Discounts */}
-        <Text className="font-medium text-lg p-2 text-[#fb9b33]">Special Discounts %</Text>
+        <Text className="font-medium text-lg p-2">Special Discounts %</Text>
         {restaurants.length > 0 ? (
           <FlatList
             data={restaurants}
