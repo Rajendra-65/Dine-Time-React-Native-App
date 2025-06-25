@@ -1,13 +1,19 @@
+import uploadData from "@/config/BulkUpload"
 import { restaurants } from "@/store/resturants"
 import { BlurView } from "expo-blur"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ActivityIndicator, FlatList, Image, ImageBackground, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import homeBanner from '../../assets/images/homeBanner.png'
 import logo from '../../assets/images/logo.png'
 
 
-export default function home() {
+export default function Home() {
+
+  useEffect(() => {
+    uploadData();
+  }, []);
+
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -42,9 +48,8 @@ export default function home() {
     </TouchableOpacity>
   );
 
-
   return (
-    <SafeAreaView style={{ backgroundColor: '#2b2b2b', flex: 1, paddingBottom:20 }}>
+    <SafeAreaView style={{ backgroundColor: '#2b2b2b', flex: 1, paddingBottom: 20 }}>
       <ScrollView>
         {/* Welcome section */}
         <View className="flex items-center justify-center">
