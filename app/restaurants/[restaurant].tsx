@@ -1,3 +1,4 @@
+import DatePickerComponent from '@/components/restaurant/DatePickerComponent'
 import { db } from '@/config/firebaseConfig'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useLocalSearchParams } from 'expo-router'
@@ -238,6 +239,24 @@ const Restaurant = () => {
               Get Direction
             </Text>
           </Text>
+        </View>
+        <View 
+          className = "flex-1 flex-row ml-1 p-2"
+        >
+          <Ionicons
+            onPress = {handleNextImage}
+            name = "time"
+            size = {20}
+            color = '#f49b33'
+          />
+          <Text 
+            className = "max-w-[75%] mx-1 font-semibold text-white"
+          >
+            {restaurantData?.opening} - {restaurantData?.closing}
+          </Text>
+        </View>
+        <View>
+          <DatePickerComponent/>
         </View>
       </ScrollView>
     </SafeAreaView>
