@@ -1,4 +1,5 @@
 import DatePickerComponent from '@/components/restaurant/DatePickerComponent'
+import GuestPickerCompoenent from '@/components/restaurant/GuestPickerCompoenent'
 import { db } from '@/config/firebaseConfig'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useLocalSearchParams } from 'expo-router'
@@ -12,7 +13,9 @@ const Restaurant = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [restaurantData, setRestaurantData] = useState({});
   const [carouselData, setCarouselData] = useState({});
+  const [selectedNumber, setSelectedNumber] = useState(2)
   const [slotData, setSlotData] = useState();
+  const [date, setDate] = useState(new Date());
   const FlastListRef = useRef(null)
   const windowWidth = Dimensions.get("window").width
 
@@ -223,13 +226,13 @@ const Restaurant = () => {
           className="flex-1 flex-row mt-2 p-2"
         >
           <Ionicons
-            onPress={ handleLocation}
+            onPress={handleLocation}
             name="location-sharp"
             size={24}
             color="#f49b33"
           />
           <Text
-            className = "max-w-[75%] text-white"
+            className="max-w-[75%] text-white"
           >
             {restaurantData?.address} | {"   "}
             <Text
@@ -240,26 +243,56 @@ const Restaurant = () => {
             </Text>
           </Text>
         </View>
-        <View 
-          className = "flex-1 flex-row ml-1 p-2"
+        <View
+          className="flex-1 flex-row ml-1 p-2"
         >
           <Ionicons
-            onPress = {handleNextImage}
-            name = "time"
-            size = {20}
-            color = '#f49b33'
+            onPress={handleNextImage}
+            name="time"
+            size={20}
+            color='#f49b33'
           />
-          <Text 
-            className = "max-w-[75%] mx-1 font-semibold text-white"
+          <Text
+            className="max-w-[75%] mx-1 font-semibold text-white"
           >
             {restaurantData?.opening} - {restaurantData?.closing}
           </Text>
         </View>
-        <View
-          className = "ml-4"
-        >
-          <DatePickerComponent/>
+        <View className = "flex-1 border m-2 p-2 border-[#f49b33] rounded-lg">
+          <View className="flex flex-row items-center p-2">
+            <Ionicons
+              name="calendar"
+              size={20}
+              color="#f49b33"
+            />
+            <Text className="text-white mx-2">
+              Select a booking Date
+            </Text>
+            <DatePickerComponent
+              date={date}
+              setDate={setDate}
+            />
+          </View>
+          <View className="flex flex-row bg-[#474747] p-2 items-center mt-6 border-[#474747] rounded-md">
+            <Ionicons
+              name="people"
+              size={20}
+              color="#f49b33"
+            />
+            <Text className="text-white mx-2">
+              Select Number of guest
+            </Text>
+            <View
+              className="mr-1 justify-end right-6 absolute"
+            >
+              <GuestPickerCompoenent
+                selectedNumber={selectedNumber}
+                setSelectedNumber={setSelectedNumber}
+              />
+            </View>
+          </View>
         </View>
+
       </ScrollView>
     </SafeAreaView>
   )
