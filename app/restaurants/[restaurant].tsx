@@ -255,7 +255,9 @@ const Restaurant = () => {
             {restaurantData?.opening} - {restaurantData?.closing}
           </Text>
         </View>
-        <View>
+        <View
+          className = "ml-4"
+        >
           <DatePickerComponent/>
         </View>
       </ScrollView>
