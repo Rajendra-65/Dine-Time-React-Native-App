@@ -1,4 +1,5 @@
 import DatePickerComponent from '@/components/restaurant/DatePickerComponent'
+import FindSlot from '@/components/restaurant/FindSlot'
 import GuestPickerCompoenent from '@/components/restaurant/GuestPickerCompoenent'
 import { db } from '@/config/firebaseConfig'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -16,6 +17,7 @@ const Restaurant = () => {
   const [selectedNumber, setSelectedNumber] = useState(2)
   const [slotData, setSlotData] = useState();
   const [date, setDate] = useState(new Date());
+  const [selectedSlot,setSelectedSlot] = useState(null)
   const FlastListRef = useRef(null)
   const windowWidth = Dimensions.get("window").width
 
@@ -292,7 +294,17 @@ const Restaurant = () => {
             </View>
           </View>
         </View>
-
+        <View
+          className = "flex-1 "
+        >
+          <FindSlot
+            date = {date}
+            selectedNumber = {selectedNumber}
+            slots = {slotData}
+            selectedSlot = {selectedSlot}
+            setSelectedSlot = {setSelectedSlot}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
