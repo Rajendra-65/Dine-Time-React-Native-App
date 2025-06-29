@@ -7,7 +7,7 @@ const FindSlot = ({ date,
   selectedSlot,
   setSelectedSlot }) => {
 
-  const [slotsVisible, setSlotVisisble] = useState(false);
+  const [slotsVisible, setSlotVisisble] = useState(true);
 
   const handlePress = () => {
     setSlotVisisble(!slotsVisible)
@@ -31,16 +31,38 @@ const FindSlot = ({ date,
         <View
           className = {`${selectedSlot != null && 'flex-1'}`}
         >
-          <TouchableOpacity
-            className="w-full"
-            onPress={handlePress}
-          >
-            <Text className="text-lg text-white text-center font-semibold bg-[#f49b33] p-2 my-3 rounded-lg">
-              Book Now
-            </Text>
-          </TouchableOpacity>
+          {
+            selectedSlot != null && (
+              <View className = "flex-1">
+                <TouchableOpacity onPress = {handlePress}>
+                  <Text 
+                    className = "text-center text-white text-lg font-semibold bg-[#f49b33] p-2 my-2 mx-2 rounded-lg"
+                  >
+                    BookSlot
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )
+          }
         </View>
       </View>
+      {
+        slotsVisible &&(
+          <View>
+            {
+              slots && (slots?.map((slot,index)=>(
+                <TouchableOpacity
+                  key={index}
+                >
+                  <Text className = "text-white font-bold">
+                    {slot}
+                  </Text>
+                </TouchableOpacity>
+              )))
+            }
+          </View>
+        )
+      }
     </View>
   )
 }

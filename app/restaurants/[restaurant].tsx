@@ -15,9 +15,9 @@ const Restaurant = () => {
   const [restaurantData, setRestaurantData] = useState({});
   const [carouselData, setCarouselData] = useState({});
   const [selectedNumber, setSelectedNumber] = useState(2)
-  const [slotData, setSlotData] = useState();
+  const [slotData, setSlotData] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [selectedSlot,setSelectedSlot] = useState(null)
+  const [selectedSlot, setSelectedSlot] = useState(null)
   const FlastListRef = useRef(null)
   const windowWidth = Dimensions.get("window").width
 
@@ -180,10 +180,14 @@ const Restaurant = () => {
           where("res_id", "==", doc.ref) // or doc.ref
         );
         const slotsSnapShot = await getDocs(slotsQuery);
-
+        console.log("snapshot", slotsSnapShot)
         const slots = slotsSnapShot.docs.map(s => s.data());
-        setSlotData(slots);
-        console.log(carouselData)
+        if (slots.length > 0 && slots[0]?.slot) {
+          setSlotData(slots[0].slot);
+        } else {
+          console.warn("No slot data found");
+          setSlotData([]); // or null depending on your default state
+        }
       }
 
     } catch (e) {
@@ -260,7 +264,7 @@ const Restaurant = () => {
             {restaurantData?.opening} - {restaurantData?.closing}
           </Text>
         </View>
-        <View className = "flex-1 border m-2 p-2 border-[#f49b33] rounded-lg">
+        <View className="flex-1 border m-2 p-2 border-[#f49b33] rounded-lg">
           <View className="flex flex-row items-center p-2">
             <Ionicons
               name="calendar"
@@ -295,7 +299,7 @@ const Restaurant = () => {
           </View>
         </View>
         <View
-          className = "flex-1 "
+          className="flex-1 "
         >
           <FindSlot
             date = {date}
@@ -303,7 +307,7 @@ const Restaurant = () => {
             slots = {slotData}
             selectedSlot = {selectedSlot}
             setSelectedSlot = {setSelectedSlot}
-          />
+          /> 
         </View>
       </ScrollView>
     </SafeAreaView>
