@@ -177,15 +177,15 @@ const Restaurant = () => {
 
         const slotsQuery = query(
           collection(db, 'slots'),
-          where("res_id", "==", doc.ref) // or doc.ref
+          where("ref_id", "==", doc.ref) // or doc.ref
         );
         const slotsSnapShot = await getDocs(slotsQuery);
-        console.log("snapshot", slotsSnapShot)
+        
         const slots = slotsSnapShot.docs.map(s => s.data());
         if (slots.length > 0 && slots[0]?.slot) {
           setSlotData(slots[0].slot);
         } else {
-          console.warn("No slot data found");
+          
           setSlotData([]); // or null depending on your default state
         }
       }
