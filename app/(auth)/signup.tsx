@@ -12,9 +12,14 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
+
+import { auth, db } from "@/config/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Frame from "../../assets/images/Frame.png";
 import logo from "../../assets/images/logo.png";
-
 const SignUp = () => {
   const router = useRouter();
 
@@ -27,9 +32,30 @@ const SignUp = () => {
       .required("Password is required"),
   });
 
-  const handleSignUp = (values) => {
-    console.log("Form values:", values);
-    // 👉 You can call your API here
+  const handleSignUp = async (values) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        email: values.email,
+        createdAt: new Date(),
+      });
+
+      console.log("User signed up and saved to Firestore!");
+      console.log(user)
+      await AsyncStorage.setItem("userEmail",values.email);
+      console.log(user,AsyncStorage.getItem('User Email'));
+      // You can navigate to home or login screen here
+      router.push("/home"); // or '/signin' based on your flow
+    } catch (error) {
+      console.log("Error signing up:", error.message);
+    }
   };
 
   return (
@@ -91,7 +117,7 @@ const SignUp = () => {
 
                 {/* Submit Button */}
                 <TouchableOpacity
-                  className="bg-[#f49933]  p-3 rounded items-center mt-2"
+                  className="bg-[#f49933] p-3 rounded items-center mt-2"
                   onPress={handleSubmit}
                 >
                   <Text className="text-white font-semibold">Sign Up</Text>
@@ -110,19 +136,17 @@ const SignUp = () => {
 
           <TouchableOpacity
             className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-row items-center justify-center"
-            onPress={() => router.push('/signin')}
+            onPress={() => router.push("/signin")}
           >
-            <Text className="text-white">Already a user ?</Text>
+            <Text className="text-white">Already a user?</Text>
             <Text className="text-lg font-semibold underline text-[#f49933] ml-2">
               SignIn
             </Text>
           </TouchableOpacity>
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default SignUp;
-

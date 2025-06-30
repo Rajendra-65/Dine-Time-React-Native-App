@@ -43,7 +43,7 @@ const FindSlot = ({ date,
           {
             selectedSlot != null && (
               <View className = "flex-1">
-                <TouchableOpacity onPress = {handlePress}>
+                <TouchableOpacity>
                   <Text 
                     className = "text-center text-white text-lg font-semibold bg-[#f49b33] p-2 my-2 mx-2 rounded-lg"
                   >
@@ -64,7 +64,7 @@ const FindSlot = ({ date,
               slots && (slots?.map((slot,index)=>(
                 <TouchableOpacity
                   key={index}
-                  className = {`m-2 p-4 bg-[#f49b33] rounded-lg items-center justify-center `}
+                  className = {`m-2 p-4 bg-[#f49b33] rounded-lg items-center justify-center ${selectedSlot && selectedSlot !== slot ? "opacity-50": ""}`}
                   onPress = {()=>handleSlotPress(slot)}
                   disabled = {
                     selectedSlot === slot || selectedSlot === null ? false : true
