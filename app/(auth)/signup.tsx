@@ -1,4 +1,7 @@
+import { auth, db } from "@/config/firebaseConfig";
 import { useRouter } from "expo-router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { Formik } from "formik";
 import React from "react";
 import {
@@ -13,14 +16,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 
-import { auth, db } from "@/config/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Frame from "../../assets/images/Frame.png";
 import logo from "../../assets/images/logo.png";
-const SignUp = () => {
+
+const Signup = () => {
   const router = useRouter();
 
   const SignInSchema = Yup.object().shape({
@@ -118,7 +118,7 @@ const SignUp = () => {
                 {/* Submit Button */}
                 <TouchableOpacity
                   className="bg-[#f49933] p-3 rounded items-center mt-2"
-                  onPress={handleSubmit}
+                  onPress={handleSignUp}
                 >
                   <Text className="text-white font-semibold">Sign Up</Text>
                 </TouchableOpacity>
@@ -149,4 +149,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Signup;
